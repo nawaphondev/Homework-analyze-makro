@@ -11,17 +11,28 @@ exports.register = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  res.json({ message: "Login" });
+  const { email, password } = req.body;
+  res.json({ email, password });
 };
 
 exports.forgetPassword = (req, res, next) => {
-  res.json({ message: "Forget password" });
+  const { email } = req.body;
+  res.json({ email });
 };
 
+// https://api.codecamp.com/auth/forgot-password-abcdefg
 exports.verifyForgetPassword = (req, res, next) => {
-  res.json({ message: "Verify forget password" });
+  const { token} = req.params
+  // Logic check token
+  // redirect reset password -> ติด token
+  res.json({ token });
 };
 
 exports.resetPassword = (req, res, next) => {
-  res.json({ message: "Reset password" });
+  const { token } = req.params;
+  const { password } = req.body;
+  // check token
+  // เปลี่ยน Password
+  // เก็บ Password ใหม่ ลง db
+  res.json({ token, password });
 };

@@ -14,7 +14,7 @@ model Search {
   id            Int           @id @default(autoincrement())
   name          String
   count         Int
-  user_Searches User_Search[]
+  user_searches User_Search[]
 }
 
 model User_Search {
@@ -51,7 +51,7 @@ model User {
   favorites         Favorite[]
   cart              Cart?
   orders            Order[]
-  user_Searches     User_Search[]
+  user_searches     User_Search[]
 }
 
 model Shipping_Address {
@@ -95,13 +95,12 @@ model Cart {
   totalBeforeDiscount Int            @default(0) @map("total_before_discount")
   discount            Int            @default(0)
   deliveryFee         Int            @default(0) @map("delivery_fee")
-  total               Int            @default(0)
   user                User           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId              Int            @unique @map("user_id")
-  cart_Products       Cart_Product[]
+  cart_products       Cart_product[]
 }
 
-model Cart_Product {
+model Cart_product {
   id        Int     @id @default(autoincrement())
   quantity  Int     @default(1)
   cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -110,9 +109,9 @@ model Cart_Product {
   productId Int     @map("product_id")
 }
 
-model Order_Product {
+model Order_product {
   id        Int     @id @default(autoincrement())
-  quantity  Int     @default(1)
+  qunatity  Int     @default(1)
   order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   orderId   Int
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -129,7 +128,7 @@ model Order {
   user                User            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId              Int             @map("user_id")
   status              Status[]
-  order_Products      Order_Product[]
+  order_products      Order_product[]
 }
 
 enum OrderStatus {
@@ -166,14 +165,14 @@ model Product {
   user               User                @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId             Int                 @map("user_id")
   favoriteProducts   Favorite_Product[]
-  cart_Products      Cart_Product[]
-  order_Products     Order_Product[]
-  product_Img        Product_Img[]
+  cart_products      Cart_product[]
+  order_products     Order_product[]
+  product_imgs       Product_Img[]
   category           Category            @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   categoryId         Int
   brand              Brand               @relation(fields: [brandId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   brandId            Int                 @map("brand_id")
-  product_Promotions Product_Promotion[]
+  product_promotions Product_Promotion[]
 }
 
 model Product_Promotion {
@@ -190,14 +189,14 @@ model Promotion {
   bannerUrl          String?             @map("banner_url")
   discount           Int?
   point              Int?
-  product_Promotions Product_Promotion[]
+  product_promotions Product_Promotion[]
 }
 
 model Product_Img {
-  id       Int     @id @default(autoincrement())
-  url      String
-  product  Product @relation(fields: [producId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  producId Int     @map("product_id")
+  id        Int     @id @default(autoincrement())
+  url       String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId Int     @map("product_id")
 }
 
 model Category {
